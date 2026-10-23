@@ -1,0 +1,39 @@
+
+User@SILAS MINGW64 ~/Desktop/PROJECTS/FullStackOpen/fs-containers/answers (main)
+$ touch exercise2.txt
+
+User@SILAS MINGW64 ~/Desktop/PROJECTS/FullStackOpen/fs-containers/answers (main)
+$ ls
+excercise1.txt  exercise2.txt
+
+User@SILAS MINGW64 ~/Desktop/PROJECTS/FullStackOpen/fs-containers/answers (main)
+$ docker run -it ubuntu bash
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+d9d511d19a19: Pull complete
+435bf5c20694: Pull complete
+2e7e55092090: Download complete
+Digest: sha256:c098726dd9b9733f3e885f8de0ef375206a311b0a317eadc40d347b1115fb944
+Status: Downloaded newer image for ubuntu:latest
+root@8d94a5c6d983:/# mkdir -p /usr/src/app
+root@8d94a5c6d983:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@8d94a5c6d983:/# touch usr/src/app/index.js
+root@8d94a5c6d983:/# ls
+bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@8d94a5c6d983:/# cd usr/
+root@8d94a5c6d983:/usr# ls
+bin  games  include  lib  lib64  libexec  local  sbin  share  src
+root@8d94a5c6d983:/usr# cd src/app
+root@8d94a5c6d983:/usr/src/app# ls
+index.js
+root@8d94a5c6d983:/usr/src/app# cd..
+bash: cd..: command not found
+root@8d94a5c6d983:/usr/src/app# cd ..
+root@8d94a5c6d983:/usr/src# ls
+app
+root@8d94a5c6d983:/usr/src# exit
+exit
+
+User@SILAS MINGW64 ~/Desktop/PROJECTS/FullStackOpen/fs-containers/answers (main)
+$
