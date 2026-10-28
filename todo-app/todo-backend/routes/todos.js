@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     done: false
   })
-
+  console.log('Hitting the post and testing the redis', todo)
   await redis.set('added_todos', count +1)
   res.send(todo);
 });
