@@ -12,13 +12,11 @@ router.get('/', async (_, res) => {
 /* POST todo to listing. */
 router.post('/', async (req, res) => {
   const current = await  redis.get('added_todos')
-  console.log('Current before 0 or setting it to 0')
   const count = Number(current) || 0
   const todo = await Todo.create({
     text: req.body.text,
     done: false
   })
-  console.log('Hitting the post and testing the redis', todo)
   await redis.set('added_todos', count +1)
   res.send(todo);
 });
