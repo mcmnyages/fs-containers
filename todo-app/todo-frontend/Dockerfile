@@ -1,15 +1,32 @@
-# Build stage
-FROM node:20 AS build-stage
+
+FROM node:22 AS dependencies
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY package*.json ./
 
 RUN npm ci
+
+
+# Testing stage
+FROM dependencies AS test-stage
+
+COPY . .
+
+RUN npm test
+
+
+# Build stage
+FROM dependencies AS build-stage
+
+COPY . .
+
+COPY --from=test-stage /usr/src/app/package.json /tmp/test-passed
 
 ENV VITE_BACKEND_URL=http://localhost:3000
 
 RUN npm run build
+
 
 # Production stage
 FROM nginx:alpine
