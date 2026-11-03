@@ -1,11 +1,16 @@
+
 FROM node:24
 
 WORKDIR /usr/src/app
 
+# Copy dependency files first
+COPY package*.json ./
+
+# Install dependencies inside the container
+RUN npm ci
+
+# Copy the remaining application files
 COPY . .
 
-# Change npm ci to npm install since we are going to be in development mode
-RUN npm install
-
-# npm run dev is the command to start the application in development mode
-CMD ["npm", "run", "dev", "--", "--host"]
+# Start Vite development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
