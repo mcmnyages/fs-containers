@@ -1,10 +1,37 @@
+
+# ==========================================
+# Dependencies
+# ==========================================
 node_modules/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
 .env
 
+# ==========================================
+# Operating System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Database Data & Persistence
+# ==========================================
 todo-app/redis_data/
 todo-app/mongo_data/
+todo-app/todo-backend/redis_data/
 
-# Playwright artifacts
+# ==========================================
+# Playwright Test Artifacts
+# ==========================================
+todo-tests/playwright-report/
+todo-tests/test-results/
 todo-app/test-results/
 todo-app/playwright-report/
 todo-app/playwright/.cache/
+
+# ==========================================
+# Playwright Cache & Generated Files
+# ==========================================
+**/playwright/.cache/
