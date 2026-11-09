@@ -1,0 +1,58 @@
+@baseUrl=http://localhost:3003/api
+
+############ USERS ########
+
+### Create User  ###
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+  "username": "root",
+  "name": "Superuser",
+  "password": "salasana"
+}
+
+### Get All Users ###
+GET {{baseUrl}}/users
+
+### Login ####
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "username": "root",
+  "password": "salasana"
+}
+
+
+############ BLOGS ########
+
+### Get all blogs ###
+GET {{baseUrl}}/blogs
+
+
+### Create A Blog ###
+POST {{baseUrl}}/blogs
+Content-Type: application/json
+Authorization: Bearer {{your token here}}
+
+{
+  "title": "Learning Backend",
+  "author": "McMnyages",
+  "url": "https://example.com/fullstack",
+  "likes": 30
+}
+
+### Delete A specific blog ###
+DELETE {{baseUrl}}/blogs/6a7f2d8b0519bb42ac4566ee
+
+### Edit A specific blog ###
+PUT {{baseUrl}}/blogs/6a7f2bbea963968e694211ed
+Content-Type: application/json
+
+{
+  "title": "Updated blog title",
+  "author": "Updated Author",
+  "url": "https://example.com/updated",
+  "likes": 15
+}

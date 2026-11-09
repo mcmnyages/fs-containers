@@ -1,0 +1,109 @@
+
+name: Bloglist Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+        cache: npm
+        cache-dependency-path: bloglist_backend/package-lock.json
+
+    - name: Install backend dependencies
+      run: npm ci --prefix bloglist_backend
+
+    - name: Verify required environment variables
+      env:
+        SECRET: ${{ secrets.SECRET }}
+        MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
+      run: |
+        test -n "$SECRET" || (echo "SECRET is missing" && exit 1)
+        test -n "$MONGO_TEST_URL" || (echo "MONGO_TEST_URL is missing" && exit 1)
+        echo "Required environment variables are configured"
+
+    - name: Run backend tests
+      env:
+        NODE_ENV: test
+        SECRET: ${{ secrets.SECRET }}
+        MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
+      run: npm run test:backend
+
+  frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix bloglist-frontend
+
+      - name: Lint frontend
+        run: npm run lint
+
+      - name: Run frontend tests
+        run: npm run test:frontend
+
+      - name: Build frontend
+        run: npm run build
+
+ 
+  e2e:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+
+    env:
+      NODE_ENV: test
+      SECRET: ${{ secrets.SECRET }}
+      MONGO_TEST_URL: ${{ secrets.MONGO_TEST_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            bloglist_backend/package-lock.json
+            bloglist-frontend/package-lock.json
+            e2e-tests/package-lock.json
+
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install backend dependencies
+        run: npm ci --prefix bloglist_backend
+
+      - name: Install frontend dependencies
+        run: npm ci --prefix bloglist-frontend
+
+      - name: Install E2E dependencies
+        run: npm ci --prefix e2e-tests
+
+      - name: Install Chromium
+        run: npx --prefix e2e-tests playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: npm run test:e2e

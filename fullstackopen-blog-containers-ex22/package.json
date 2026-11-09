@@ -1,0 +1,33 @@
+{
+  "name": "fullstackopen-blog-ci-cd-ex21",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": "true",
+  "scripts": {
+    "dev": "concurrently -k -n BACKEND,FRONTEND \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm --prefix bloglist_backend run dev",
+    "dev:frontend": "npm --prefix bloglist-frontend run dev",
+    "dev:test": "concurrently -k -n BACKEND,FRONTEND \"npm --prefix bloglist_backend run start:test\" \"npm --prefix bloglist-frontend run dev -- --host 127.0.0.1\"",
+    "build": "npm --prefix bloglist-frontend run build",
+    "start": "npm --prefix bloglist_backend start",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "npm --prefix bloglist_backend test",
+    "test:frontend": "npm --prefix bloglist-frontend test",
+    "test:e2e": "npm --prefix e2e-tests test",
+    "lint": "npm --prefix bloglist-frontend run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mcmnyages/fullstackopen-blog-ci-cd-ex21.git"
+  },
+  "author": "@McMnyages",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mcmnyages/fullstackopen-blog-ci-cd-ex21/issues"
+  },
+  "homepage": "https://github.com/mcmnyages/fullstackopen-blog-ci-cd-ex21#readme",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}
