@@ -1,0 +1,40 @@
+
+services:
+  frontend:
+    build:
+        context: ./bloglist-frontend
+        dockerfile: dev.Dockerfile
+    volumes:
+      - ./bloglist-frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    environment:
+    - VITE_API_PROXY_TARGET=http://backend:3003
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./bloglist_backend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./bloglist_backend:/app
+      - /app/node_modules
+    ports:
+      - "3003:3003"
+    environment:
+      NODE_ENV: development
+      PORT: 3003
+      MONGO_URL: mongodb://mongo:27017/bloglist
+      SECRET: ${SECRET}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:8
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
