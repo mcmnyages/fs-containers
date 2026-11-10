@@ -4,10 +4,11 @@ Containerized development and production environments for the Full Stack Open Bl
 
 ## Project Links
 
-- **Repository:** [fs-containers / bloglist-app](https://github.com/mcmnyages/fs-containers/tree/main/fullstackopen-blog-containers-ex22/bloglist-app)
+- **Repository:** [link to bloglist-app](https://github.com/mcmnyages/fullstackopen-blog-containers-ex22-ex23.git)
 or copy this link:
 ```
-https://github.com/mcmnyages/fs-containers/tree/main/fullstackopen-blog-containers-ex22/bloglist-app
+https://github.com/mcmnyages/fullstackopen-blog-containers-ex22-ex23.git
+
 ```
 - **Course:** Full Stack Open – Containers
 
